@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: univerliga-analytics-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/analytics}
+    username: ${DB_USER:analytics}
+    password: ${DB_PASSWORD:analytics}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:8081/realms/univerliga}
+
+server:
+  port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+info:
+  app:
+    name: univerliga-analytics-service
+    version: 0.1.0
+
+provisioning:
+  mode: ${PROVISIONING_MODE:mock}
+
+analytics:
+  features:
+    network: ${ANALYTICS_FEATURE_NETWORK:false}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

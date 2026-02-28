@@ -1,0 +1,48 @@
+{
+  "realm": "univerliga",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {"name": "ROLE_ADMIN"},
+      {"name": "ROLE_MANAGER"},
+      {"name": "ROLE_HR"},
+      {"name": "ROLE_EMPLOYEE"}
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "univerliga-analytics",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "univerliga-analytics-secret",
+      "directAccessGrantsEnabled": true,
+      "protocol": "openid-connect"
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "credentials": [{"type": "password", "value": "admin", "temporary": false}],
+      "realmRoles": ["ROLE_ADMIN"]
+    },
+    {
+      "username": "manager",
+      "enabled": true,
+      "credentials": [{"type": "password", "value": "manager", "temporary": false}],
+      "realmRoles": ["ROLE_MANAGER"]
+    },
+    {
+      "username": "hr",
+      "enabled": true,
+      "credentials": [{"type": "password", "value": "hr", "temporary": false}],
+      "realmRoles": ["ROLE_HR"]
+    },
+    {
+      "username": "employee",
+      "enabled": true,
+      "credentials": [{"type": "password", "value": "employee", "temporary": false}],
+      "realmRoles": ["ROLE_EMPLOYEE"]
+    }
+  ]
+}

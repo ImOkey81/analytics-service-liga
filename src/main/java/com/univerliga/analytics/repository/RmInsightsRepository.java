@@ -1,0 +1,11 @@
+package com.univerliga.analytics.repository;
+
+import com.univerliga.analytics.model.RmInsightsEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.time.LocalDate;
+import java.util.List;
+
+public interface RmInsightsRepository extends JpaRepository<RmInsightsEntity, Long> {
+    List<RmInsightsEntity> findByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
+}
