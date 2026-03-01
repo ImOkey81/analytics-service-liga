@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface RmCategoryRatingsRepository extends JpaRepository<RmCategoryRatingsEntity, Long> {
     List<RmCategoryRatingsEntity> findByPeriodFromAndPeriodToAndDepartmentIdAndTeamIdAndPersonId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId, String personId);
+
+    void deleteByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
 }

@@ -1,4 +1,15 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
   analytics-postgres:
     image: postgres:16
     environment:
@@ -52,13 +63,24 @@ services:
       DB_URL: jdbc:postgresql://analytics-postgres:5432/analytics
       DB_USER: analytics
       DB_PASSWORD: analytics
+      RABBIT_HOST: rabbitmq
+      RABBIT_PORT: 5672
+      RABBIT_USER: guest
+      RABBIT_PASS: guest
       KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/univerliga
-      PROVISIONING_MODE: mock
+      PROVISIONING_MODE: readmodel
       ANALYTICS_FEATURE_NETWORK: "false"
+      ANALYTICS_INGESTION_BROKER_ENABLED: "true"
+      ANALYTICS_INGESTION_BROKER_EXCHANGE: univerliga.feedback.events
+      ANALYTICS_INGESTION_BROKER_QUEUE: univerliga.analytics.feedback.inbox
+      ANALYTICS_INGESTION_BROKER_DLQ: univerliga.analytics.feedback.dlq
+      ANALYTICS_INGESTION_BROKER_ROUTING_KEYS: feedback.review.created,feedback.review.updated,feedback.review.deleted
     ports:
       - "8080:8080"
     depends_on:
       analytics-postgres:
+        condition: service_healthy
+      rabbitmq:
         condition: service_healthy
       keycloak:
         condition: service_started

@@ -8,4 +8,8 @@ import java.util.Optional;
 
 public interface RmKpiSummaryRepository extends JpaRepository<RmKpiSummaryEntity, Long> {
     Optional<RmKpiSummaryEntity> findFirstByPeriodFromAndPeriodToAndDepartmentIdAndTeamIdAndPersonId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId, String personId);
+
+    void deleteByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
+
+    void deleteByPeriodFromAndPeriodToAndDepartmentIdAndTeamIdAndPersonId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId, String personId);
 }

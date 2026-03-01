@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface RmSubcategoryFreqRepository extends JpaRepository<RmSubcategoryFreqEntity, Long> {
     List<RmSubcategoryFreqEntity> findByPeriodFromAndPeriodToAndDepartmentIdAndTeamIdAndPersonIdAndCategoryId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId, String personId, String categoryId);
+
+    void deleteByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
 }

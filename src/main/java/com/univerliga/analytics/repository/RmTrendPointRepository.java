@@ -16,4 +16,6 @@ public interface RmTrendPointRepository extends JpaRepository<RmTrendPointEntity
             String teamId,
             String personId
     );
+
+    void deleteByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
 }

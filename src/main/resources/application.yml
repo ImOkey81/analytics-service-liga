@@ -14,6 +14,11 @@ spring:
     open-in-view: false
   flyway:
     enabled: true
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASS:guest}
   security:
     oauth2:
       resourceserver:
@@ -40,6 +45,17 @@ provisioning:
 analytics:
   features:
     network: ${ANALYTICS_FEATURE_NETWORK:false}
+  ingestion:
+    broker:
+      enabled: ${ANALYTICS_INGESTION_BROKER_ENABLED:true}
+      exchange: ${ANALYTICS_INGESTION_BROKER_EXCHANGE:univerliga.feedback.events}
+      queue: ${ANALYTICS_INGESTION_BROKER_QUEUE:univerliga.analytics.feedback.inbox}
+      dlq: ${ANALYTICS_INGESTION_BROKER_DLQ:univerliga.analytics.feedback.dlq}
+      routing-keys: ${ANALYTICS_INGESTION_BROKER_ROUTING_KEYS:feedback.review.created,feedback.review.updated,feedback.review.deleted}
+      max-retries: ${ANALYTICS_INGESTION_BROKER_MAX_RETRIES:5}
+    projection:
+      period-from: ${ANALYTICS_INGESTION_PROJECTION_PERIOD_FROM:2026-01-01}
+      period-to: ${ANALYTICS_INGESTION_PROJECTION_PERIOD_TO:2026-12-31}
 
 springdoc:
   swagger-ui:

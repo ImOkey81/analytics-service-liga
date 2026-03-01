@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface RmInsightsRepository extends JpaRepository<RmInsightsEntity, Long> {
     List<RmInsightsEntity> findByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
+
+    void deleteByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
 }

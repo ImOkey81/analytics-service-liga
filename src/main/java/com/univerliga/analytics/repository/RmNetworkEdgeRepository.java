@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface RmNetworkEdgeRepository extends JpaRepository<RmNetworkEdgeEntity, Long> {
     List<RmNetworkEdgeEntity> findByPeriodFromAndPeriodToAndTeamId(LocalDate periodFrom, LocalDate periodTo, String teamId);
+
+    void deleteByPeriodFromAndPeriodToAndTeamId(LocalDate periodFrom, LocalDate periodTo, String teamId);
 }

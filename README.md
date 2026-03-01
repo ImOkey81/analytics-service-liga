@@ -24,7 +24,40 @@ Service URLs:
 
 ## Modes
 - `PROVISIONING_MODE=mock` (default): in-memory feedback dataset and runtime aggregation.
-- `PROVISIONING_MODE=readmodel`: read from read-model tables (`rm_*`) filled by Flyway seed.
+- `PROVISIONING_MODE=readmodel`: read from read-model tables (`rm_*`) filled by RabbitMQ ingestion (`feedback.review.*`).
+
+## Broker ingestion (RabbitMQ)
+- Exchange: `univerliga.feedback.events`
+- Queue: `univerliga.analytics.feedback.inbox`
+- DLQ: `univerliga.analytics.feedback.dlq`
+- Routing keys: `feedback.review.created`, `feedback.review.updated`, `feedback.review.deleted`
+- Idempotency: table `ingestion_processed_events` (unique by `event_id`)
+- Fact store: table `rm_feedback_events` (upsert by `feedback_id`)
+- Projection: incremental reproject only for impacted `(departmentId, teamId)` scopes plus department-global KPI row.
+
+### Event contract
+```json
+{
+  "eventId": "8b7b568c-b57b-4e46-87fb-8134e50f06a7",
+  "type": "FeedbackCreated",
+  "occurredAt": "2026-03-01T09:15:00Z",
+  "source": "feedback-service",
+  "payload": {
+    "feedbackId": "rev_1001",
+    "authorPersonId": "p_11",
+    "targetPersonId": "p_12",
+    "targetName": "Olga K.",
+    "departmentId": "d_1",
+    "teamId": "t_2",
+    "categoryId": "cat_communication",
+    "categoryName": "Communication",
+    "subcategoryId": "sub_communication_good",
+    "subcategoryName": "Constructive communication",
+    "rating": 5,
+    "feedbackDate": "2026-03-01"
+  }
+}
+```
 
 ## Network feature flag
 - `ANALYTICS_FEATURE_NETWORK=false` by default.

@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface RmPersonPositivityRepository extends JpaRepository<RmPersonPositivityEntity, Long> {
     List<RmPersonPositivityEntity> findByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
+
+    void deleteByPeriodFromAndPeriodToAndDepartmentIdAndTeamId(LocalDate periodFrom, LocalDate periodTo, String departmentId, String teamId);
 }
